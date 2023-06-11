@@ -3,13 +3,13 @@
   become: true
   tasks:
     - name: base packages
-    apt:
-      pkg:
-      - build-essential
-      - curl
-      - htop
-      - python3-dev
-      - python3-pip
-      - vim
-      - tmux
+      apt:
+        pkg:
+          - build-essential
+          - curl
+          - htop
+          - python3-dev
+          - python3-pip
+          - vim
+          - tmux
       state: latest
