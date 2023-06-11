@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: base packages
+  hosts: all
   become: true
   tasks:
     - name: base packages
