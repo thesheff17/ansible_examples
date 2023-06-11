@@ -1,10 +1,10 @@
 ---
 - hosts: all
-
-- name: base packages
-  become: yes
-  package:
-    name:
+  become: true
+  tasks:
+    - name: base packages
+    apt:
+      pkg:
       - build-essential
       - curl
       - htop
@@ -12,5 +12,4 @@
       - python3-pip
       - vim
       - tmux
-    state: latest
-    update_cache: true
+      state: latest
