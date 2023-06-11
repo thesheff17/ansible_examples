@@ -1,0 +1,25 @@
+---
+ - name: base packages
+   hosts: all
+   become: true
+   tasks: 
+    - name: apt-get curl
+      apt:
+        name: curl
+        state: present
+        force_apt_get: yes
+    - name: apt-get tmux
+      apt:
+        name: tmux
+        state: present
+        force_apt_get: yes
+    - name: apt-get vim
+      apt:
+        name: vim
+        state: present
+        force_apt_get: yes
+    - name: apt-get build-essential
+      apt:
+        name: build-essential
+        state: present
+        force_apt_get: yes
