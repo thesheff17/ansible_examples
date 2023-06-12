@@ -7,8 +7,11 @@
     pythonversion: 3.11.4
 
   tasks:
+    - name: apt-get upgrade
+      command: apt-get update 
+      
     - name: apt-get package for python
-      command: apt-get update && apt-get upgrade -y build-essential gdb lcov pkg-config libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+      command: apt-get upgrade -y build-essential gdb lcov pkg-config libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
       environment:
         DEBIAN_FRONTEND: noninteractive
 
