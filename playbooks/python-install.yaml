@@ -1,0 +1,48 @@
+---
+- name: python 3.11 install
+  hosts: all
+  become: true
+  serial: 1
+  vars:
+    pythonversion: 3.11.4
+
+  tasks:
+    - name: apt-get package for python
+      command: apt-get update && apt-get upgrade -y build-essential gdb lcov pkg-config libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: delete directory
+      file:
+        path: "/usr/local/src/Python-{{ pythonversion }}"
+        state: absent
+
+    - name: delete python file
+      file:
+        path: "/usr/local/src/Python-{{ pythonversion }}.tgz"
+        state: absent
+
+    - name: download python
+      shell: wget https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversion }}.tgz
+      args:
+        chdir: /usr/local/src
+
+    - name: extract python
+      shell:  tar xzf Python-{{ pythonversion }}.tgz
+      args:
+        chdir: /usr/local/src
+
+    - name: configure python
+      shell:  ./configure --enable-optimizations
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
+
+    - name: make python with {{ ansible_processor_vcpus }} CPUs
+      shell: make -j{{ ansible_processor_vcpus }}
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
+
+    - name: make altinstall python with {{ ansible_processor_vcpus }} CPUs
+      shell:  make -j{{ ansible_processor_vcpus }} altinstall
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
