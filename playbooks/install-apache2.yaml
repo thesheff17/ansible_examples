@@ -1,0 +1,30 @@
+---
+- name: setup webserver
+  hosts: all
+  become: true
+  tasks:
+    - name: apache installed
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: true
+        state: latest
+    - name: custom index.html
+      ansible.builtin.copy:
+        dest: "/var/www/html/index.html"
+        content: |
+          Custom Web Page
+    - name: ensable ssl module
+      community.general.apache2_module:
+        state: present
+        name: ssl
+    - name: enable mod_rewrite module
+      community.general.apache2_module:
+        state: present
+        name: rewrite
+    - name: a2ensite default-ssl
+      command: a2ensite default-ssl
+    - name: apache2 service enabled
+      ansible.builtin.service:
+        name: apache2
+        enabled: true
+        state: restarted
