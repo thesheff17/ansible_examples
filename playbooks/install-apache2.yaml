@@ -1,6 +1,6 @@
 ---
 - name: setup webserver
-  hosts: all
+  hosts: webservers
   become: true
   tasks:
     - name: apache installed

@@ -1,6 +1,6 @@
 ---
 - name: python 3.11 install
-  become: yes
+  hosts: python
   serial: 1
   vars:
     pythonversion: 3.11.4
