@@ -9,6 +9,12 @@
         state: directory
         mode: '2770'
 
+    - name: samba install
+      ansible.builtin.apt:
+        name: samba
+        update_cache: true
+        state: latest
+    
     - name: change permissions of share01 directory
       file:
         path: /home/ubuntu/share01
@@ -17,12 +23,6 @@
 
     - name: set smbpasswd
       command: echo -e "ubuntu\nubuntu" | smbpasswd -a -s ubuntu
-
-    - name: samba install
-      ansible.builtin.apt:
-        name: samba
-        update_cache: true
-        state: latest
 
     - name: adding lines to smb.conf
       ansible.builtin.blockinfile:
