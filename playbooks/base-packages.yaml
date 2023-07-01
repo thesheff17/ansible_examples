@@ -1,7 +1,12 @@
 ---
 - hosts: all
   become: yes
-  tasks: 
+  tasks:
+  - name: supress banner
+    file:
+      path: "/home/ubuntu/.hushlogin"
+      state: touch
+      
   - name: base packages
     apt:
       name:
