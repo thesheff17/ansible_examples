@@ -22,7 +22,7 @@
         group: "sambashare"
 
     - name: set smbpasswd
-      command: echo -ne "ubuntu\nubuntu\n" | smbpasswd -a -s ubuntu
+      shell: "printf 'ubuntu\nubuntu\n' | smbpasswd -a ubuntu"
 
     - name: adding lines to smb.conf
       ansible.builtin.blockinfile:
