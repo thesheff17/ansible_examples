@@ -1,0 +1,26 @@
+---
+- name: k8s setup
+  hosts: k8s
+  become: true
+  tasks:
+    - name: add k8s key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: add k8s repo
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+
+    - name: install k8s packages
+      apt:
+        name:
+        - kubelet
+        - kubeadm
+        - kubectl
+        update_cache: true
+        state: latest
+
+    - name: pull k8s images
+      shell: kubeadm config images pull

@@ -1,0 +1,37 @@
+---
+- name: docker setup
+  hosts: k8s
+  become: true
+  tasks:
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: "comment out disable cri plugin"
+      replace:
+        path: /etc/containerd/config.toml
+        regexp: 'disabled_plugins = \[\"cri\"\]'
+        replace: '# disabled_plugins = ["cri"]'
+
+    - name: enable and start docker service
+      command: systemctl enable --now docker
+
+    - name: enable and start containerd
+      command: systemctl enable --now containerd
+
+    - name: Restart service httpd, in all cases
+      ansible.builtin.service:
+        name: containerd
+        state: restarted
