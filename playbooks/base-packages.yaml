@@ -1,8 +1,9 @@
 ---
 - hosts: all
   become: yes
+  serial: 1
   tasks:
-  - name: supress banner
+  - name: suppress banner
     file:
       path: "/home/ubuntu/.hushlogin"
       state: touch
