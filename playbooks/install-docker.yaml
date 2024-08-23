@@ -25,6 +25,12 @@
         regexp: 'disabled_plugins = \[\"cri\"\]'
         replace: '# disabled_plugins = ["cri"]'
 
+    - name: Add ubuntu to docker group
+      ansible.builtin.user:
+        name: ubuntu
+        groups: docker
+        append: true
+
     - name: enable and start docker service
       command: systemctl enable --now docker
 
