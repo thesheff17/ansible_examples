@@ -1,0 +1,70 @@
+---
+- name: python 3.12 install
+  hosts: python
+  become: yes
+  serial: 1
+  vars:
+    pythonversion: 3.12.5
+
+  tasks:
+    - name: apt-get update
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        pkg:
+          - build-essential 
+          - gdb 
+          - lcov 
+          - pkg-config 
+          - libbz2-dev 
+          - libffi-dev 
+          - libgdbm-dev 
+          - libgdbm-compat-dev 
+          - liblzma-dev 
+          - libncurses5-dev 
+          - libreadline6-dev 
+          - libsqlite3-dev 
+          - libssl-dev 
+          - lzma 
+          - lzma-dev
+          - tk-dev 
+          - uuid-dev 
+          - zlib1g-dev
+
+    - name: delete directory
+      file:
+        path: "/usr/local/src/Python-{{ pythonversion }}"
+        state: absent
+
+    - name: delete python file
+      file:
+        path: "/usr/local/src/Python-{{ pythonversion }}.tgz"
+        state: absent
+
+    - name: download python
+      ansible.builtin.get_url:
+        url: https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversion }}.tgz
+        dest: /usr/local/src/Python-{{ pythonversion }}.tgz
+
+    - name: extract python file
+      ansible.builtin.unarchive:
+        src:  /usr/local/src/Python-{{ pythonversion }}.tgz
+        dest: /usr/local/src/
+        remote_src: yes
+
+    - name: configure python
+      shell:  ./configure --enable-optimizations
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
+
+    - name: make python with {{ ansible_processor_vcpus }} CPUs
+      shell: make -j{{ ansible_processor_vcpus }}
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
+
+    - name: make altinstall python with {{ ansible_processor_vcpus }} CPUs
+      shell:  make -j{{ ansible_processor_vcpus }} altinstall
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversion }}
