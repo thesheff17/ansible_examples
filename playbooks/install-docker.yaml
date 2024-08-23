@@ -1,6 +1,6 @@
 ---
 - name: docker setup
-  hosts: k8s
+  hosts: docker
   become: true
   tasks:
     - name: Add Docker GPG apt Key
