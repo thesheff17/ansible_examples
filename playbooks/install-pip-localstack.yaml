@@ -1,6 +1,6 @@
 ---
 - name: install pip packages for python3.11
-  hosts: python
+  hosts: programming
   serial: 1
   
   tasks:

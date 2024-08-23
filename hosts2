@@ -1,5 +1,11 @@
-[python]
+[basehosts]
 127.0.0.1]
 
 [docker]
+127.0.0.1
+
+[python]
+127.0.0.1
+
+[programming]
 127.0.0.1
