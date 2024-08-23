@@ -1,0 +1,11 @@
+---
+- name: install pip packages for python3.11
+  hosts: python
+  serial: 1
+  
+  tasks:
+    - name: Install localstack packages for python3.11
+      ansible.builtin.pip:
+        name: localstack
+        virtualenv_python: python3.11
+        virtualenv: /home/ubuntu/.virtualenv/localstack_testing
