@@ -6,6 +6,12 @@
     venvdir:  /home/ubuntu/.virtualenv/localstack_testing
   
   tasks:
+    - name: create directory
+      ansible.builtin.file:
+        path: /home/ubuntu/.virtualenv/
+        state: directory
+        mode: '0755'
+        
     - name: create python3.11 virtualenv setup
       shell: python3.11 -m venv localstack_testing
       args:
