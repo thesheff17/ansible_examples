@@ -38,33 +38,36 @@
         path: "/usr/local/src/Python-{{ pythonversion }}"
         state: absent
 
-    - name: delete python file
+    - name: delete python-{{ pythonversion }} file
       file:
         path: "/usr/local/src/Python-{{ pythonversion }}.tgz"
         state: absent
 
-    - name: download python
+    - name: download python-{{ pythonversion }}
       ansible.builtin.get_url:
         url: https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversion }}.tgz
         dest: /usr/local/src/Python-{{ pythonversion }}.tgz
 
-    - name: extract python file
+    - name: extract python-{{ pythonversion }} file
       ansible.builtin.unarchive:
         src:  /usr/local/src/Python-{{ pythonversion }}.tgz
         dest: /usr/local/src/
         remote_src: yes
 
-    - name: configure python
-      shell:  ./configure --enable-optimizations
+    - name: configure python-{{ pythonversion }}
+      shell:  ./configure --enable-optimizations --enable-shared --with-lto
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
-    - name: make python with {{ ansible_processor_vcpus }} CPUs
-      shell: make -j{{ ansible_processor_vcpus }}
+    - name: make python-{{ pythonversion }} with {{ ansible_processor_nproc }} CPUs
+      shell: make -j{{ ansible_processor_nproc }}
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
-    - name: make altinstall python with {{ ansible_processor_vcpus }} CPUs
-      shell:  make -j{{ ansible_processor_vcpus }} altinstall
+    - name: make altinstall python-{{ pythonversion }} with {{ ansible_processor_nproc }} CPUs
+      shell:  make -j{{ ansible_processor_nproc }} altinstall
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
+
+    - name: pip3.11 self-update
+      shell: pip3.11 install --upgrade pip
