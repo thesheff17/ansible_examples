@@ -1,0 +1,22 @@
+---
+- name: install pip packages for python3.11
+  hosts: programming
+  serial: 1
+  vars:
+    venvdir:  /home/ubuntu/.virtualenv/localstack_testing
+  
+  tasks:
+    - name: create python3.11 virtualenv setup
+      shell: python3.11 -m venv localstack_testing
+      args:
+        chdir: /home/ubuntu/.virtualenv/
+    
+    - name: installing localstack pip package
+      shell: source "{{ venvdir }}"/bin/activate && pip install localstack
+      args:
+        executable: /bin/bash
+
+    - name: start local stack service
+      shell: source "{{ venvdir }}"/bin/activate && localstack start -d
+      args:
+        executable: /bin/bash
