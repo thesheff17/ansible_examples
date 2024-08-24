@@ -55,7 +55,7 @@
         remote_src: yes
 
     - name: configure python-{{ pythonversion }}
-      shell:  ./configure --enable-optimizations --enable-shared --with-lto
+      shell:  ./configure --enable-optimizations --with-lto
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
