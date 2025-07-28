@@ -1,5 +1,5 @@
 - name: apt-get update and upgrade
-  hosts: all
+  hosts: basehosts
   become: yes
   tasks:
     - name: update apt packages
