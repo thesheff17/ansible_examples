@@ -15,3 +15,19 @@
   tasks:
     - name: install minikube
       shell: minikube start --force
+
+    - name: Pause for 90 seconds before starting again
+      pause:
+        seconds: 90
+    
+- name: pod status
+  hosts: k8s
+  become_user: ubuntu
+  tasks:
+    - name: pod status
+      shell: minikube kubectl -- get po -A
+      register: pod_status
+
+    - name: print pod status
+      ansible.builtin.debug:
+        var: pod_status
