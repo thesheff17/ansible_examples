@@ -52,4 +52,5 @@ ansible-playbook -i hosts2 playbooks/install-kubernetes.yaml --connection=local
 # elapsed time
 duration=$SECONDS
 elapsed_seconds=$((end_time - start_time))
-echo
+echo "Script Completed - $((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
+```
