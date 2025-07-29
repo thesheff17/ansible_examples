@@ -1,0 +1,74 @@
+---
+- name: python 3.14 install
+  hosts: python
+  become: yes
+  serial: 1
+  vars:
+    pythonversion: 3.14.0
+    pythonversiona: 3.14.0rc1
+
+  tasks:
+    - name: apt-get update
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        pkg:
+          - build-essential
+          - gdb
+          - lcov
+          - pkg-config
+          - libbz2-dev
+          - libffi-dev
+          - libgdbm-dev
+          - libgdbm-compat-dev
+          - liblzma-dev
+          - libncurses5-dev
+          - libreadline6-dev
+          - libsqlite3-dev
+          - libssl-dev
+          - lzma
+          - lzma-dev
+          - tk-dev
+          - uuid-dev
+          - zlib1g-dev
+
+    - name: delete directory
+      file:
+        path: "/usr/local/src/Python-{{ pythonversion }}"
+        state: absent
+
+    - name: delete python-{{ pythonversion }} file
+      file:
+        path: "/usr/local/src/Python-{{ pythonversiona }}.tgz"
+        state: absent
+
+    - name: download python-{{ pythonversion }}
+      ansible.builtin.get_url:
+        url: https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversiona }}.tgz
+        dest: /usr/local/src/Python-{{ pythonversiona }}.tgz
+
+    - name: extract python-{{ pythonversiona }} file
+      ansible.builtin.unarchive:
+        src:  /usr/local/src/Python-{{ pythonversiona }}.tgz
+        dest: /usr/local/src/
+        remote_src: yes
+
+    - name: configure python-{{ pythonversiona }}
+      shell:  ./configure --enable-optimizations --with-lto
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
+
+    - name: make python-{{ pythonversionia }} with {{ ansible_processor_nproc }} CPUs
+      shell: make -j{{ ansible_processor_nproc }}
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
+
+    - name: make altinstall python-{{ pythonversiona }} with {{ ansible_processor_nproc }} CPUs
+      shell:  make -j{{ ansible_processor_nproc }} altinstall
+      args:
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
+
+    - name: pip3.14 self-update
+      shell: pip3.14 install --upgrade pip
