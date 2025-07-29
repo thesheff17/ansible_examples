@@ -9,3 +9,9 @@
 
 [programming]
 127.0.0.1
+
+[webservers]
+127.0.0.1
+
+[k8s]
+127.0.0.1

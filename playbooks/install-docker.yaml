@@ -37,7 +37,7 @@
     - name: enable and start containerd
       command: systemctl enable --now containerd
 
-    - name: Restart service httpd, in all cases
+    - name: Restart docker service
       ansible.builtin.service:
         name: containerd
         state: restarted

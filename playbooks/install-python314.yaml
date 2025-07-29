@@ -60,7 +60,7 @@
       args:
         chdir: /usr/local/src/Python-{{ pythonversiona }}
 
-    - name: make python-{{ pythonversionia }} with {{ ansible_processor_nproc }} CPUs
+    - name: make python-{{ pythonversiona }} with {{ ansible_processor_nproc }} CPUs
       shell: make -j{{ ansible_processor_nproc }}
       args:
         chdir: /usr/local/src/Python-{{ pythonversiona }}

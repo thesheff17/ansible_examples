@@ -26,3 +26,30 @@ duration=$SECONDS
 elapsed_seconds=$((end_time - start_time))
 echo "Script Completed - $((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
 ```
+
+# testing outside docker(bare metal):
+
+I use this setup on bare metal hardware.  I also try to test this inside proxmox + ubuntu 24.04 virtual machine.  Read more about running docker inside proxmox <a href="https://pve.proxmox.com/wiki/Linux_Container">here.</a>  Proxmox recommendeds that you run docker inside a Proxmox QEMU VM.
+
+copy/paste this block:
+```bash
+SECONDS=0
+cd /root/
+export DEBIAN_FRONTEND=noninteractive
+apt-get update 
+apt-get upgrade -y
+apt-get install -y git software-properties-common ansible
+add-apt-repository --yes --update ppa:ansible/ansible
+git clone https://github.com/thesheff17/ansible_examples.git
+cd ansible_examples
+ansible-playbook -i hosts2 playbooks/update-apt-packages.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/base-packages.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python313.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python314.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-docker.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-kubernetes.yaml --connection=local
+
+# elapsed time
+duration=$SECONDS
+elapsed_seconds=$((end_time - start_time))
+echo
