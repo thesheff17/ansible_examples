@@ -37,7 +37,7 @@
 
     - name: Add Go to PATH environment variable for all users
       ansible.builtin.lineinfile:
-        path: /home/youtube/.bashrc
+        path: /home/ubuntu/.bashrc
         line: 'export PATH=$PATH:{{ go_install_path }}/go/bin'
         regexp: '^export PATH=.*go/bin'
         state: present

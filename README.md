@@ -36,37 +36,7 @@ echo "Script Completed - $((duration / 60)) minutes and $((duration % 60)) secon
 
 I use this setup on bare metal hardware.  I also try to test this inside proxmox + ubuntu 24.04 virtual machine.  Read more about running docker inside proxmox <a href="https://pve.proxmox.com/wiki/Linux_Container">here.</a>  Proxmox recommends that you run docker inside a Proxmox QEMU VM.
 
-copy/paste this block:
-```bash
-SECONDS=0
-cd /root/
-export DEBIAN_FRONTEND=noninteractive
-apt-get update 
-apt-get upgrade -y
-apt-get install -y git software-properties-common
-add-apt-repository --yes --update ppa:ansible/ansible
-apt-get update
-apt-get install -y ansible
-ansible --version
-git clone https://github.com/thesheff17/ansible_examples.git
-cd ansible_examples
-ansible-playbook -i hosts2 playbooks/update-apt-packages.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/base-packages.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-python313.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-python314.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-docker.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-kubernetes.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-localstack.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-samba.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-apache2.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-golang.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-vscode.yaml --connection=local
-
-# elapsed time
-duration=$SECONDS
-elapsed_seconds=$((end_time - start_time))
-echo "Script Completed - $((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
-```
+Since this is going to automated I'm going to put this in a `bare_metal.sh` script.  See this script for more details.
 
 # skip installing python3 from source:
 copy/paste this block:
