@@ -1,6 +1,9 @@
 [basehosts]
 127.0.0.1]
 
+[ssh]
+127.0.0.1]
+
 [docker]
 127.0.0.1
 
@@ -8,6 +11,9 @@
 127.0.0.1
 
 [programming]
+127.0.0.1
+
+[devtools]
 127.0.0.1
 
 [webservers]

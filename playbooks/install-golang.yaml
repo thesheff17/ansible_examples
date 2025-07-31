@@ -1,0 +1,49 @@
+---
+- name: Install Golang on Ubuntu
+  hosts: programming
+  become: true
+
+  vars:
+    go_version: "1.24.5" # Specify the desired Go version
+    go_archive_name: "go{{ go_version }}.linux-amd64.tar.gz"
+    go_download_url: "https://golang.org/dl/{{ go_archive_name }}"
+    go_install_path: "/usr/local"
+
+  tasks:
+    - name: Ensure necessary packages are installed
+      ansible.builtin.apt:
+        name:
+          - curl
+          - tar
+        state: present
+        update_cache: true
+
+    - name: Download Golang archive
+      ansible.builtin.get_url:
+        url: "{{ go_download_url }}"
+        dest: "/tmp/{{ go_archive_name }}"
+        mode: '0644'
+
+    - name: Remove existing Go installation (if any)
+      ansible.builtin.file:
+        path: "{{ go_install_path }}/go"
+        state: absent
+
+    - name: Extract Golang archive
+      ansible.builtin.unarchive:
+        src: "/tmp/{{ go_archive_name }}"
+        dest: "{{ go_install_path }}"
+        remote_src: true
+
+    - name: Add Go to PATH environment variable for all users
+      ansible.builtin.lineinfile:
+        path: /home/youtube/.bashrc
+        line: 'export PATH=$PATH:{{ go_install_path }}/go/bin'
+        regexp: '^export PATH=.*go/bin'
+        state: present
+        insertafter: EOF
+
+    - name: Clean up downloaded archive
+      ansible.builtin.file:
+        path: "/tmp/{{ go_archive_name }}"
+        state: absent

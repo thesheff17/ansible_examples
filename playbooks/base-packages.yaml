@@ -1,6 +1,6 @@
 ---
 - hosts: basehosts
-  become: yes
+  become: true
   serial: 1
   tasks:
   - name: suppress banner

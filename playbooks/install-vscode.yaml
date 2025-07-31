@@ -1,0 +1,25 @@
+---
+- name: Install Visual Studio Code
+  hosts: devtools
+  become: yes
+
+  tasks:
+    - name: Import Microsoft GPG key
+      ansible.builtin.apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add Visual Studio Code repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main
+        state: present
+        filename: vscode
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Visual Studio Code package
+      ansible.builtin.apt:
+        name: code
+        state: present

@@ -1,7 +1,7 @@
 ---
 - name: python 3.14 install
-  hosts: python
-  become: yes
+  hosts: programming
+  become: true
   serial: 1
   vars:
     pythonversion: 3.14.0

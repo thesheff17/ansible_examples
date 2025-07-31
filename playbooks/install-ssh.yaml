@@ -1,0 +1,17 @@
+---
+- hosts: ssh
+  become: yes
+  serial: 1
+  tasks:
+
+  - name: ssh package
+    apt:
+      name:
+      - ssh
+      cache_valid_time: 3600    # update cache if more than an hour old
+
+  - name: ssh service enabled
+      ansible.builtin.service:
+        name: ssh
+        enabled: true
+        state: restarted

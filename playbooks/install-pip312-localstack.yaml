@@ -1,6 +1,6 @@
 ---
 - name: install pip packages for python3.11
-  hosts: programming
+  hosts: devtools
   serial: 1
   vars:
     venvdir:  /home/ubuntu/.virtualenv/localstack_testing
@@ -12,8 +12,8 @@
         state: directory
         mode: '0755'
         
-    - name: create python3.11 virtualenv setup
-      shell: python3.11 -m venv localstack_testing
+    - name: create python3.12 virtualenv setup
+      shell: python3.12 -m venv localstack_testing
       args:
         chdir: /home/ubuntu/.virtualenv/
     
