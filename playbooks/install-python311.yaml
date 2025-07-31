@@ -4,7 +4,7 @@
   become: true
   serial: 1
   vars:
-    pythonversion: 3.11.9
+    pythonversion: 3.11.13
 
   tasks:
     - name: apt-get update
