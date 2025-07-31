@@ -115,9 +115,10 @@ git clone https://github.com/thesheff17/ansible_examples.git ansible_examples_2.
 diff -bur ansible_examples_1_0 ansible_examples_2.0
 ```
 
-Upgrade the code when you want to with the changes you want. Sumbit 
+Upgrade the code when you want to with the changes you want. If you see a problem submit an issues [here.](https://github.com/thesheff17/ansible_examples/issues)
+
 
 # which operating system does this support?
-This assumes you will be running the latest Ubuntu Long Term Support (LTS) Version.  At this time this is called: <br/>`Ubuntu 24.04 codename: noble` 
+This assumes you will be running the latest Ubuntu Long Term Support (LTS) Version.  At this time this is called: <br/>`Ubuntu 24.04 code name: noble` 
 
-This is the only os I will be testing on.  I'm sure these scripts could be adobted to another os.  I want to make sure this is as stable as possible and testing time is limited.  I will be sticking to ubuntu.
+This is the only os I will be testing on.  I'm sure these scripts could be adobted to another os.  I want to make sure this is as stable as possible and testing time is limited.
