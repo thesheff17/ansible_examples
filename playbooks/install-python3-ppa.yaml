@@ -1,0 +1,29 @@
+---
+- name: python 3.x install
+  hosts: programming
+  become: true
+  serial: 1
+  vars:
+    pythonversion: 3.11.13
+
+  tasks:
+    - name: adding python3 ppa
+      shell: add-apt-repository ppa:deadsnakes/ppa --yes
+
+    - name: apt-get update
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: installing python3.x packages
+      apt:
+        name:
+        - python3.11
+        - python3.11-venv
+        - python3.11-dev
+        - python3.13
+        - python3.13-venv
+        - python3.13-dev
+        - python3.14
+        - python3.14-venv
+        - python3.14-dev
+        cache_valid_time: 3600    # update cache if more than an hour old

@@ -11,6 +11,7 @@
   - name: base packages
     apt:
       name:
+      - add-apt-repository
       - build-essential
       - ca-certificates
       - curl
@@ -20,6 +21,7 @@
       - python3-pip
       - python3-venv
       - python3-virtualenv
+      - sudo
       - tmux
       - vim
       cache_valid_time: 3600    # update cache if more than an hour old
