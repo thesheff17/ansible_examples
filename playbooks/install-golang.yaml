@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    go_version: "1.24.5" # Specify the desired Go version
+    go_version: "1.25.0" # Specify the desired Go version
     go_archive_name: "go{{ go_version }}.linux-amd64.tar.gz"
     go_download_url: "https://golang.org/dl/{{ go_archive_name }}"
     go_install_path: "/usr/local"
