@@ -42,7 +42,7 @@
         mode: '0644'
       notify:
         - reload systemd
-        - Sstart and enable openweb ui service
+        - start and enable openweb ui service
 
   handlers:
     - name: reload systemd
