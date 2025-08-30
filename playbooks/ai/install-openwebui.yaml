@@ -1,5 +1,5 @@
 ---
-- name: deploy open web ui as a systemd service using pip
+- name: deploy openweb ui as a systemd service using pip
   hosts: ai
   become: yes
   vars:
@@ -21,7 +21,7 @@
         cmd: "python3 -m venv {{ venv_dir }}"
         creates: "{{ venv_dir }}/bin/activate"
 
-    - name: install ppen web ui via pip in the virtual environment
+    - name: install openweb ui via pip in the virtual environment
       ansible.builtin.pip:
         name: "open-webui"
         virtualenv: "{{ venv_dir }}"
@@ -42,14 +42,14 @@
         mode: '0644'
       notify:
         - reload systemd
-        - Sstart and enable open web ui service
+        - Sstart and enable openweb ui service
 
   handlers:
     - name: reload systemd
       ansible.builtin.systemd:
         daemon_reload: yes
 
-    - name: start and enable open web ui service
+    - name: start and enable openweb ui service
       ansible.builtin.systemd:
         name: "{{ service_name }}"
         state: started

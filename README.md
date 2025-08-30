@@ -96,7 +96,7 @@ This is the only os I will be testing on.  I'm sure these scripts could be adobt
 # AI stuff
 I'm starting to work on a bunch of random AI stuff.  This will be self contained in the `playbooks/ai` directory.  This is all experimental stuff. Make PR if you see issues.
 ```bash
-ansible-playbook -i hosts2 playbooks/ai/install-ollama.yaml--connection=local
+ansible-playbook -i hosts2 playbooks/ai/install-ollama.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/ai/install-openwebui.yaml --connection=local
 ```
 
