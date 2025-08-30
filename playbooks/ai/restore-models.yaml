@@ -1,0 +1,18 @@
+---
+- name: Copy ollama models from /tmp/models to local
+  hosts: ai
+  become: yes
+
+  tasks:
+    - name: check if the /tmp/models directory exists
+      ansible.builtin.stat:
+        path: /tmp/models
+      register: models_dir_stat
+
+    - name: copy from /tmp/models to /usr/share/ollama/.ollama/models/
+      ansible.builtin.copy:
+        src: /tmp/models/
+        dest: /usr/share/ollama/.ollama/models/
+        # Use remote_src to indicate that the source files are on the target machine
+        remote_src: yes
+      when: models_dir_stat.stat.exists and models_dir_stat.stat.isdir

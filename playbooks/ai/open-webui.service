@@ -1,0 +1,12 @@
+[Unit]
+Description=Open WebUI Service
+After=network.target
+[Service]
+Type=simple
+ExecStart=/opt/.virtualenvs/open-webui/bin/open-webui serve
+ExecStop=/bin/kill -HUP $MAINPID
+Restart=always
+User=root
+Group=root
+[Install]
+WantedBy=multi-user.target

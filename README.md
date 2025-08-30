@@ -5,7 +5,7 @@ start ubuntu 24.04 docker container:
 docker run -it ubuntu:24.04 /bin/bash
 ```
 
-Now copy/paste this block:
+Example of first set of scripts:
 ```bash
 SECONDS=0
 cd /root/
@@ -92,3 +92,19 @@ Upgrade the code when you want to with the changes you want. If you see a proble
 This assumes you will be running the latest Ubuntu Long Term Support (LTS) Version.  At this time this is called: <br/>`Ubuntu 24.04 code name: noble` 
 
 This is the only os I will be testing on.  I'm sure these scripts could be adobted to another os.  I want to make sure this is as stable as possible and testing time is limited.
+
+# AI stuff
+I'm starting to work on a bunch of random AI stuff.  This will be self contained in the `playbooks/ai` directory.  This is all experimental stuff. Make PR if you see issues.
+```bash
+ansible-playbook -i hosts2 playbooks/ai/install-ollama.yaml--connection=local
+ansible-playbook -i hosts2 playbooks/ai/install-openwebui.yaml --connection=local
+```
+
+There are some helper playbooks to manage the models for ollama. I have found `rsync` to be very fast. I setup ssh keys between these 2 machines.
+```bash
+# backup
+time rsync -avz --delete -e ssh /usr/share/ollama/.ollama/models/ root@xxx.xxx.xx.x:/root/models/
+
+# restore
+time rsync -avz --delete -e ssh root@xxx.xxx.xx.x:/root/models/ /usr/share/ollama/.ollama/models/
+```

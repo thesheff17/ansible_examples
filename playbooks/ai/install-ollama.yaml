@@ -1,0 +1,23 @@
+---
+- name: install ollama
+  hosts: ai
+  become: true
+  serial: 1
+
+  tasks:
+    - name: install ollama
+      shell: curl -fsSL https://ollama.com/install.sh | sh
+      become: true
+
+    - name: recursively set permissions on ollama directory
+      ansible.builtin.file:
+        path: /usr/share/ollama/
+        owner: ollama
+        group: ollama
+        recurse: yes
+
+    - name: start and enable ollama service
+      ansible.builtin.systemd:
+        name: "ollama"
+        state: started
+        enabled: yes

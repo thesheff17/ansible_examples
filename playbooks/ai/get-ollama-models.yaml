@@ -1,0 +1,67 @@
+---
+- name: pull ollama ai models <= 20GB
+  hosts: ai
+  vars:
+    ollama_models:
+      - gpt-oss:20b # latest
+      - deepseek-r1:8b # latest
+      - deepseek-r1:1.5b
+      - deepseek-r1:7b
+      - deepseek-r1:14b
+      - deepseek-r1:32b
+      - gemma3:4b # latest
+      - gemma3:270m
+      - gemma3:1b
+      - gemma3:12b
+      - gemma3:27b
+      - qwen3:8b # latest
+      - qwen3:0.6b
+      - qwen3:1.7b
+      - qwen3:4b
+      - qwen3:14b
+      - qwen3:30b
+      - qwen3:32b
+      - llama3.2:3b # latest
+      - llama3.2:1b
+      - mistral:7b # latest
+      - qwen2.5:7b # latest
+      - qwen2.5:0.5b
+      - qwen2.5:1.5b
+      - qwen2.5:3b
+      - qwen2.5:14b
+      - qwen2.5:32b
+      - llama3:8b # latest
+      - qwen2.5-coder:7b # latest
+      - qwen2.5-coder:0.5b
+      - qwen2.5-coder:1.5b
+      - qwen2.5-coder:3b
+      - qwen2.5-coder:14b
+      - qwen2.5-coder:32b
+      - gemma:7b # latest
+      - gemma:2b
+      - qwen:4b # latest
+      - qwen:0.5b
+      - qwen:1.8b
+      - qwen:7b
+      - qwen:14b
+      - qwen:32b
+      - qwen2:7b # latest
+      - qwen2:0.5b
+      - qwen2:1.5b
+      - codellama:7b # latest
+      - codellama:13b
+      - codellama:34b
+      - tinyllama:1.1b # latest
+      - deepseek-coder:1.3b # latest
+      - deepseek-coder:6.7b
+      - deepseek-coder:33b
+      - deepseek-coder-v2:16b # latest
+      - codegemma:7b # latest
+      - codegemma:2b
+      - deepcoder:14b # latest
+      - deepcoder:1.5b
+
+  tasks:
+    - name: pull each model for ollama
+      ansible.builtin.shell: "ollama pull {{ item }}"
+      loop: "{{ ollama_models }}"
