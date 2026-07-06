@@ -16,15 +16,15 @@
         content: |
           Custom Web Page
 
-    - name: ensable ssl module
-      community.general.apache2_module:
-        state: present
-        name: ssl
+    - name: enable ssl module
+      ansible.builtin.command: a2enmod ssl
+      args:
+        creates: /etc/apache2/mods-enabled/ssl.load
 
     - name: enable mod_rewrite module
-      community.general.apache2_module:
-        state: present
-        name: rewrite
+      ansible.builtin.command: a2enmod rewrite
+      args:
+        creates: /etc/apache2/mods-enabled/rewrite.load
 
     - name: a2ensite default-ssl
       command: a2ensite default-ssl
