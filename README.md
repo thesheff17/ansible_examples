@@ -1,8 +1,8 @@
 # testing in docker
 
-start ubuntu 24.04 docker container:
+start ubuntu 26.04 docker container:
 ```bash
-docker run -it ubuntu:24.04 /bin/bash
+docker run -it ubuntu:26.04 /bin/bash
 ```
 
 Example of first set of scripts:
@@ -21,8 +21,11 @@ git clone https://github.com/thesheff17/ansible_examples.git
 cd ansible_examples
 ansible-playbook -i hosts2 playbooks/update-apt-packages.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/base-packages.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python311.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python312.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-python313.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-python314.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python315.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-golang.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-vscode.yaml --connection=local
 
@@ -34,7 +37,7 @@ echo "Script Completed - $((duration / 60)) minutes and $((duration % 60)) secon
 
 # testing outside docker(bare metal):
 
-I use this setup on bare metal hardware.  I also try to test this inside proxmox + ubuntu 24.04 virtual machine.  Read more about running docker inside proxmox <a href="https://pve.proxmox.com/wiki/Linux_Container">here.</a>  Proxmox recommends that you run docker inside a Proxmox QEMU VM.
+I use this setup on bare metal hardware.  I also try to test this inside proxmox + ubuntu 26.04 virtual machine.  Read more about running docker inside proxmox <a href="https://pve.proxmox.com/wiki/Linux_Container">here.</a>  Proxmox recommends that you run docker inside a Proxmox QEMU VM.
 
 Since this is going to automated I'm going to put this in a `bare_metal.sh` script.  See this script for more details.
 
@@ -89,7 +92,7 @@ Upgrade the code when you want to with the changes you want. If you see a proble
 
 
 # which operating system does this support?
-This assumes you will be running the latest Ubuntu Long Term Support (LTS) Version.  At this time this is called: <br/>`Ubuntu 24.04 code name: noble` 
+This assumes you will be running the latest Ubuntu Long Term Support (LTS) Version.  At this time this is called: <br/>`Ubuntu 26.04 code name: resolute` 
 
 This is the only os I will be testing on.  I'm sure these scripts could be adobted to another os.  I want to make sure this is as stable as possible and testing time is limited.
 

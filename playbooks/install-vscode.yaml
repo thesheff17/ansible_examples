@@ -1,25 +1,37 @@
 ---
-- name: Install Visual Studio Code
-  hosts: devtools
-  become: yes
-
+- name: Install Visual Studio Code using DEB822 Format
+  hosts: all
+  become: true
   tasks:
-    - name: Import Microsoft GPG key
-      ansible.builtin.apt_key:
-        url: https://packages.microsoft.com/keys/microsoft.asc
-        state: present
 
-    - name: Add Visual Studio Code repository
-      ansible.builtin.apt_repository:
-        repo: deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main
-        state: present
-        filename: vscode
-
-    - name: Update apt cache
+    - name: Ensure dependencies are installed
       ansible.builtin.apt:
-        update_cache: yes
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+        update_cache: true
 
-    - name: Install Visual Studio Code package
+    - name: Download VS Code GPG key
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        dest: /usr/share/keyrings/microsoft.asc
+        mode: '0644'
+
+    - name: Configure VS Code DEB822 repository
+      ansible.builtin.deb822_repository:
+        name: vscode
+        state: present
+        types: [deb]
+        uris: https://packages.microsoft.com/repos/code
+        suites: stable
+        components: main
+        signed_by: /usr/share/keyrings/microsoft.asc
+
+    - name: Install Visual Studio Code
       ansible.builtin.apt:
         name: code
         state: present
+        update_cache: true
