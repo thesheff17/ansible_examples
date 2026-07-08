@@ -18,9 +18,14 @@ ansible-playbook -i hosts2 playbooks/install-python311.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-python312.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-python313.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-python314.yaml --connection=local
+ansible-playbook -i hosts2 playbooks/install-python315.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-docker.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-kubernetes.yaml --connection=local
-ansible-playbook -i hosts2 playbooks/install-pip312-localstack.yaml --connection=local
+
+# this playbook is having some issues.  Its looking for some license. :(
+# going to skip for now.  please make pr if someone is using this.
+# ansible-playbook -i hosts2 playbooks/install-pip312-localstack.yaml --connection=local
+
 ansible-playbook -i hosts2 playbooks/install-samba.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-apache2.yaml --connection=local
 ansible-playbook -i hosts2 playbooks/install-golang.yaml --connection=local
