@@ -1,10 +1,11 @@
 ---
-- name: python 3.14 install
+- name: python 3.15 install
   hosts: programming
   become: true
   serial: 1
   vars:
-    pythonversion: 3.14.6
+    pythonversion: 3.15.0
+    pythonversiona: 3.15.0b3
 
   tasks:
     - name: apt-get update
@@ -39,34 +40,34 @@
 
     - name: delete python-{{ pythonversion }} file
       file:
-        path: "/usr/local/src/Python-{{ pythonversion }}.tgz"
+        path: "/usr/local/src/Python-{{ pythonversiona }}.tgz"
         state: absent
 
     - name: download python-{{ pythonversion }}
       ansible.builtin.get_url:
-        url: https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversion }}.tgz
-        dest: /usr/local/src/Python-{{ pythonversion }}.tgz
+        url: https://www.python.org/ftp/python/{{ pythonversion }}/Python-{{ pythonversiona }}.tgz
+        dest: /usr/local/src/Python-{{ pythonversiona }}.tgz
 
-    - name: extract python-{{ pythonversion }} file
+    - name: extract python-{{ pythonversiona }} file
       ansible.builtin.unarchive:
-        src:  /usr/local/src/Python-{{ pythonversion }}.tgz
+        src:  /usr/local/src/Python-{{ pythonversiona }}.tgz
         dest: /usr/local/src/
         remote_src: yes
 
-    - name: configure python-{{ pythonversion }}
+    - name: configure python-{{ pythonversiona }}
       shell:  ./configure --enable-optimizations --with-lto
       args:
-        chdir: /usr/local/src/Python-{{ pythonversion }}
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
 
-    - name: make python-{{ pythonversion }} with {{ ansible_facts['processor_nproc'] }} CPUs
+    - name: make python-{{ pythonversiona }} with {{ ansible_facts['processor_nproc'] }} CPUs
       shell: make -j{{ ansible_facts['processor_nproc'] }}
       args:
-        chdir: /usr/local/src/Python-{{ pythonversion }}
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
 
-    - name: make altinstall python-{{ pythonversion }} with {{ ansible_facts['processor_nproc'] }} CPUs
+    - name: make altinstall python-{{ pythonversiona }} with {{ ansible_facts['processor_nproc'] }} CPUs
       shell:  make -j{{ ansible_facts['processor_nproc'] }} altinstall
       args:
-        chdir: /usr/local/src/Python-{{ pythonversion }}
+        chdir: /usr/local/src/Python-{{ pythonversiona }}
 
-    - name: pip3.14 self-update
-      shell: pip3.14 install --upgrade pip
+    - name: pip3.15 self-update
+      shell: pip3.15 install --upgrade pip

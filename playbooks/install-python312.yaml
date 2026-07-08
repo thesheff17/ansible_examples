@@ -4,7 +4,7 @@
   become: yes
   serial: 1
   vars:
-    pythonversion: 3.12.11
+    pythonversion: 3.12.13
 
   tasks:
     - name: apt-get update
@@ -28,7 +28,6 @@
           - libsqlite3-dev 
           - libssl-dev 
           - lzma 
-          - lzma-dev
           - tk-dev 
           - uuid-dev 
           - zlib1g-dev
@@ -59,15 +58,15 @@
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
-    - name: make python-{{ pythonversion }} with {{ ansible_processor_nproc }} CPUs
-      shell: make -j{{ ansible_processor_nproc }}
+    - name: make python-{{ pythonversion }} with {{ ansible_facts['processor_nproc'] }} CPUs
+      shell: make -j{{ ansible_facts['processor_nproc'] }}
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
-    - name: make altinstall python-{{ pythonversion }} with {{ ansible_processor_nproc }} CPUs
-      shell:  make -j{{ ansible_processor_nproc }} altinstall
+    - name: make altinstall python-{{ pythonversion }} with {{ ansible_facts['processor_nproc'] }} CPUs
+      shell:  make -j{{ ansible_facts['processor_nproc'] }} altinstall
       args:
         chdir: /usr/local/src/Python-{{ pythonversion }}
 
-    - name: pip3.11 self-update
-      shell: pip3.11 install --upgrade pip
+    - name: pip3.12 self-update
+      shell: pip3.12 install --upgrade pip
